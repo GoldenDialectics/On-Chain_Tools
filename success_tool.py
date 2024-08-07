@@ -1,7 +1,7 @@
 import discord, json, aiohttp
 from discord import app_commands
 
-with open('data/config.json', 'r') as f:
+with open('/root/fumble_capital_tools/data/config.json', 'r') as f:
     config = json.load(f)
 
 DISCORD_BOT_TOKEN = config["DISCORD_BOT_TOKEN2"]
@@ -25,7 +25,7 @@ bot = PreBot()
 @app_commands.describe(contract_address="Contract address for a token", wallet="Sol or EVM wallet address")
 async def success_post(interaction: discord.Interaction, contract_address: str, wallet: str):
     page_number = "1"
-    url_template = f"https://feed-api.cielo.finance/api/v1/{wallet}/pnl/tokens?chains=solana&timeframe=max&next_object={{}}&cex_transfers=false"
+    url_template = "https://feed-api.cielo.finance/api/v1/" + {wallet}+ "/pnl/tokens?chains=solana&timeframe=max&next_object={{}}&cex_transfers=false"
 
     headers = {
         "accept": "application/json",
@@ -52,7 +52,7 @@ async def success_post(interaction: discord.Interaction, contract_address: str, 
                                 total_roi = (total_pnl) / initial_buy
                                 current_value = initial_buy + total_pnl
                                 
-                                await interaction.response.send_message(f"Initial: ${round(initial_buy, 2)}\nCurrent Value: ${round(current_value, 2)}\nROI: {round(total_roi, 2)}%")
+                                await interaction.response.send_message("Initial: " + str(round(initial_buy, 2)) + "\nCurrent Value: " + str(round(current_value, 2)) + "\nROI: " + str(round(total_roi, 2)) + "%")
                                 return
                         
                         page_data = response_data["data"]["paging"]

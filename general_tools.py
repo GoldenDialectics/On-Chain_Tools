@@ -4,7 +4,7 @@ import discord
 from discord import app_commands
 
 # Load the configuration from config.json
-with open('data/config.json', 'r') as f:
+with open('/root/fumble_capital_tools/data/config.json', 'r') as f:
     config = json.load(f)
 
 DISCORD_BOT_TOKEN = config["DISCORD_BOT_TOKEN"]
@@ -28,7 +28,7 @@ class PreBot(discord.Client):
         print("Bot Online")
         print("Connected to the following servers:")
         for guild in self.guilds:
-            print(f"- {guild.name} (ID: {guild.id})")
+            print('(- {} (ID: {}))'.format(guild.name, guild.id))
 
 bot = PreBot()
 
@@ -36,7 +36,7 @@ bot = PreBot()
 @app_commands.describe(contract_address="Contract address for a token", wallet="Sol or EVM wallet address")
 async def success_post(interaction: discord.Interaction, contract_address: str, wallet: str):
     async with aiohttp.ClientSession() as session:
-        url = f"https://feed-api.cielo.finance/api/v1/{wallet}/pnl/tokens?chains=solana&timeframe=max&next_object={contract_address}&cex_transfers=false"
+        url = "https://feed-api.cielo.finance/api/v1/{wallet}/pnl/tokens?chains=solana&timeframe=max&next_object={contract_address}&cex_transfers=false"
         headers = {
             "accept": "application/json",
             "X-API-KEY": CIELO_API_KEY

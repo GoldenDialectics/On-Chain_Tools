@@ -11,7 +11,7 @@ def replace_config_path(option):
     
     for file_path in file_paths:
         if not os.path.isfile(file_path):
-            print(f"The file {file_path} does not exist.")
+            print("The file" +  {file_path} + "does not exist.")
             return
 
         with open(file_path, 'r') as file:
@@ -23,7 +23,7 @@ def replace_config_path(option):
         with open(file_path, 'w') as file:
             file.write(new_content)
 
-        print(f"All instances of 'data/config.json' have been replaced in {file_path}.")
+        print("All instances of 'data/config.json' have been replaced in {file_path}.")
 
 if __name__ == '__main__':
     option = int(input("What would you like to do?\n1: Switch code to server mode\n2: Switch code to local mode\n\nOption: "))

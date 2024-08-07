@@ -3,14 +3,14 @@ import websockets
 import json
 import aiohttp
 
-with open('data/config.json', 'r') as f:
+with open('/root/fumble_capital_tools/data/config.json', 'r') as f:
     config = json.load(f)
 
 WEBHOOK_URL = config["WEBHOOK_URL"]
 KEYWORD_ROLE_ID = config["KEYWORD_ROLE_ID"]
 
 async def fetch_token_data(session, token_address, retries=4, delay=0.25):
-    url = f"https://frontend-api.pump.fun/coins/{token_address}"
+    url = "https://frontend-api.pump.fun/coins/" + token_address
     for attempt in range(retries):
         async with session.get(url) as response:
             if response.status == 500:
@@ -41,7 +41,7 @@ async def subscribe():
                     token_address = message["mint"]
                     token = await fetch_token_data(session, token_address)
                     
-                    with open('data/keywords.json', 'r') as f2:
+                    with open('/root/fumble_capital_tools/data/keywords.json', 'r') as f2:
                         keyword_list = json.load(f2)
                     
                     if "error" not in token:
@@ -55,14 +55,14 @@ async def subscribe():
                             token_telegram = token.get("telegram", "No Telegram") or "No Telegram"
                             
                             if "https://" not in token_twitter and "No Twitter" not in token_twitter:
-                                token_twitter = f"https://{token_twitter}"
+                                token_twitter = "https://" + {token_twitter}
                             if "https://" not in token_telegram and "No Telegram" not in token_telegram:
-                                token_telegram = f"https://{token_telegram}"
+                                token_telegram = "https://" + {token_telegram}
                             
                             webhook_data = {
                                 "embeds": [{
-                                    "title": f"{token_name} ({token_symbol})",
-                                    "description": f"**[Buy Now](https://pump.fun/{token_address}/)**\n\n**Description: **{token_description}\n\n{token_twitter} | {token_telegram}",
+                                    "title": {token_name} + ({token_symbol}),
+                                    "description": "**[Buy Now](https://pump.fun/" + {token_address} + "/**\n\n**Description: **" + {token_description} + "\n\n" + {token_twitter} | {token_telegram},
                                     "color": 47360,  
                                     "thumbnail": {
                                         "url": token_image  
